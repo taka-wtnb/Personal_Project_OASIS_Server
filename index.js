@@ -2,7 +2,8 @@ const express = require('express')
 // const bodyParser = require('body-parser')
 const cors = require('cors')
 const {pool} = require('./config')
-const {otdChartQuery} = require('./otd_chart_query')
+const {otdLineChartQuery} = require('./otd_line_chart_query')
+const {otdPieChartQuery} = require('./otd_pie_chart_query')
 
 const app = express()
 
@@ -27,12 +28,12 @@ const getDashboardInfo = (request, response) => {
   })
 }
 
-const getOTDChart = (request, response) => { 
+const getOTDLineChart = (request, response) => { 
   const supplierId = parseInt(request.query.supplierId);
   const start = request.query.start;
   const end = request.query.end;
 
-  pool.query(otdChartQuery, [supplierId, start, end], (error, results) => {
+  pool.query(otdLineChartQuery, [supplierId, start, end], (error, results) => {
 // console.log(request.query); 
     if (error) { 
       throw error
@@ -41,9 +42,23 @@ const getOTDChart = (request, response) => {
   })
 }
 
+const getOTDPieChart = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const start = request.query.start;
+  const end = request.query.end;
+
+  pool.query(otdPieChartQuery, [supplierId, start, end], (error, results) => {
+// console.log(request.query); 
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
 
 app.get('/suppliers', getDashboardInfo);
-app.get('/otdchart/', getOTDChart);
+app.get('/otdlinechart/', getOTDLineChart);
+app.get('/otdpiechart/', getOTDPieChart);
 
 // app
 //   .route('/app/dashboard')

@@ -1,4 +1,4 @@
-const otdChartQuery = `SELECT  DATE_PART('year', delivery_date) AS Year,
+const otdLineChartQuery = `SELECT  DATE_PART('year', delivery_date) AS Year,
 DATE_PART('month', delivery_date) AS Month,
 TO_CHAR(date_trunc('month', delivery_date), 'Mon-yy') AS MONYY,
 COUNT(id) AS Total,
@@ -24,5 +24,5 @@ GROUP BY Year, Month, MONYY
 ORDER BY Year, Month;`;
 
 module.exports = {
-    otdChartQuery,
+    otdLineChartQuery,
 }
