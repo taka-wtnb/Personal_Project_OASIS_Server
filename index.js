@@ -5,6 +5,7 @@ const {pool} = require('./config')
 const {otdLineChartQuery} = require('./otd_line_chart_query')
 const {otdPieChartQuery} = require('./otd_pie_chart_query')
 const {otdTableQuery} = require('./otd_table_query')
+const {costReductionLineChartQuery} = require('./cost_reduction_line_chart_query')
 
 const app = express()
 
@@ -80,11 +81,26 @@ const getOTDTable = (request, response) => {
   })
 }
 
+const getCostReductionLineChart = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const itemId = parseInt(request.query.itemId);
+  const start = request.query.start;
+  const end = request.query.end;
+
+  pool.query(costReductionLineChartQuery, [supplierId, itemId, start, end], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 app.get('/suppliers', getSuppliers);
 app.get('/items', getItems);
 app.get('/otdlinechart/', getOTDLineChart);
 app.get('/otdpiechart/', getOTDPieChart);
 app.get('/otdtable/', getOTDTable);
+app.get('/costreductionlinechart/', getCostReductionLineChart);
 
 // app
 //   .route('/app/dashboard')
