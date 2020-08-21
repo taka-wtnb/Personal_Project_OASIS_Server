@@ -20,8 +20,17 @@ app.use(cors());
 
 
 
-const getDashboardInfo = (request, response) => {
+const getSuppliers = (request, response) => {
   pool.query('SELECT * FROM supplier ORDER BY supplier_name ASC', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getItems = (request, response) => {
+  pool.query('SELECT * FROM item ORDER BY item_num ASC', (error, results) => {
     if (error) {
       throw error
     }
@@ -71,7 +80,8 @@ const getOTDTable = (request, response) => {
   })
 }
 
-app.get('/suppliers', getDashboardInfo);
+app.get('/suppliers', getSuppliers);
+app.get('/items', getItems);
 app.get('/otdlinechart/', getOTDLineChart);
 app.get('/otdpiechart/', getOTDPieChart);
 app.get('/otdtable/', getOTDTable);
@@ -79,7 +89,7 @@ app.get('/otdtable/', getOTDTable);
 // app
 //   .route('/app/dashboard')
 //   // GET endpoint
-//   .get(getDashboardInfo)
+//   .get(getSuppliers)
 //   // POST endpoint
 //   //.post(addBook)
 
