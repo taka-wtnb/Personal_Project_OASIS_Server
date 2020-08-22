@@ -6,6 +6,7 @@ const {pool} = require('./config')
 const {otdLineChartQuery} = require('./otd_line_chart_query')
 const {otdLineChartByItemQuery} = require('./otd_line_chart_by_item_query')
 const {otdPieChartQuery} = require('./otd_pie_chart_query')
+const {otdPieChartByItemQuery} = require('./otd_pie_chart_by_item_query')
 const {otdTableQuery} = require('./otd_table_query')
 const {costReductionLineChartQuery} = require('./cost_reduction_line_chart_query')
 const {costReductionPieChartQuery} = require('./cost_reduction_pie_chart_query')
@@ -76,6 +77,20 @@ const getOTDPieChart = (request, response) => {
   })
 }
 
+const getOTDPieChartByItem = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const itemId = parseInt(request.query.itemId);
+  const start = request.query.start;
+  const end = request.query.end;
+
+  pool.query(otdPieChartByItemQuery, [supplierId, itemId, start, end], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 const getOTDTable = (request, response) => { 
   const supplierId = parseInt(request.query.supplierId);
   const start = request.query.start;
@@ -135,6 +150,7 @@ app.get('/items', getItems);
 app.get('/otdlinechart/', getOTDLineChart);
 app.get('/otdlinechartbyitem/', getOTDLineChartByItem);
 app.get('/otdpiechart/', getOTDPieChart);
+app.get('/otdpiechartbyitem/', getOTDPieChartByItem);
 app.get('/otdtable/', getOTDTable);
 app.get('/costreductionlinechart/', getCostReductionLineChart);
 app.get('/costreductionpiechart/', getCostReductionPieChart);
