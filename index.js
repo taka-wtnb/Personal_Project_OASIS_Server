@@ -1,18 +1,19 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const cors = require('cors');
 
-const {pool} = require('./config')
+const {pool} = require('./config');
 
-const {otdLineChartQuery} = require('./otd_line_chart_query')
-const {otdLineChartByItemQuery} = require('./otd_line_chart_by_item_query')
-const {otdPieChartQuery} = require('./otd_pie_chart_query')
-const {otdPieChartByItemQuery} = require('./otd_pie_chart_by_item_query')
-const {otdTableQuery} = require('./otd_table_query')
-const {costReductionLineChartQuery} = require('./cost_reduction_line_chart_query')
-const {costReductionPieChartQuery} = require('./cost_reduction_pie_chart_query')
-const {costReductionPieChartByItemQuery} = require('./cost_reduction_pie_chart_by_item_query')
+const {otdLineChartQuery} = require('./otd_line_chart_query');
+const {otdLineChartByItemQuery} = require('./otd_line_chart_by_item_query');
+const {otdPieChartQuery} = require('./otd_pie_chart_query');
+const {otdPieChartByItemQuery} = require('./otd_pie_chart_by_item_query');
+const {otdTableQuery} = require('./otd_table_query');
+const {costReductionLineChartQuery} = require('./cost_reduction_line_chart_query');
+const {costReductionPieChartQuery} = require('./cost_reduction_pie_chart_query');
+const {costReductionPieChartByItemQuery} = require('./cost_reduction_pie_chart_by_item_query');
+const {costReductionTableQuery} = require('./cost_reduction_table_query');
 
-const app = express()
+const app = express();
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -24,8 +25,8 @@ const getSuppliers = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getItems = (request, response) => {
@@ -33,8 +34,8 @@ const getItems = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getOTDLineChart = (request, response) => { 
@@ -46,8 +47,8 @@ const getOTDLineChart = (request, response) => {
     if (error) { 
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getOTDLineChartByItem = (request, response) => { 
@@ -60,8 +61,8 @@ const getOTDLineChartByItem = (request, response) => {
     if (error) { 
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getOTDPieChart = (request, response) => { 
@@ -73,8 +74,8 @@ const getOTDPieChart = (request, response) => {
     if (error) { 
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getOTDPieChartByItem = (request, response) => { 
@@ -87,8 +88,8 @@ const getOTDPieChartByItem = (request, response) => {
     if (error) { 
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getOTDTable = (request, response) => { 
@@ -100,8 +101,8 @@ const getOTDTable = (request, response) => {
     if (error) { 
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getCostReductionLineChart = (request, response) => { 
@@ -114,8 +115,8 @@ const getCostReductionLineChart = (request, response) => {
     if (error) { 
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getCostReductionPieChart = (request, response) => { 
@@ -127,8 +128,8 @@ const getCostReductionPieChart = (request, response) => {
     if (error) { 
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
 }
 
 const getCostReductionPieChartByItem = (request, response) => { 
@@ -141,8 +142,22 @@ const getCostReductionPieChartByItem = (request, response) => {
     if (error) { 
       throw error
     }
-    response.status(200).json(results.rows)
-  })
+    response.status(200).json(results.rows);
+  });
+}
+
+const getCostReductionTable = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const itemId = parseInt(request.query.itemId);
+  const start = request.query.start;
+  const end = request.query.end;
+
+  pool.query(costReductionTableQuery, [supplierId, itemId, start, end], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows);
+  });
 }
 
 app.get('/suppliers', getSuppliers);
@@ -155,7 +170,7 @@ app.get('/otdtable/', getOTDTable);
 app.get('/costreductionlinechart/', getCostReductionLineChart);
 app.get('/costreductionpiechart/', getCostReductionPieChart);
 app.get('/costreductionpiechartbyitem/', getCostReductionPieChartByItem);
-
+app.get('/costreductiontable/', getCostReductionTable);
 
 app.listen(3002, () => {
   console.log("Server is listening");
