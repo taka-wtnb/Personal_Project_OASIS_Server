@@ -14,6 +14,8 @@ const {costReductionPieChartByItemQuery} = require('./cost_reduction_pie_chart_b
 const {costReductionTableQuery} = require('./cost_reduction_table_query');
 const {qualityManagementLineChartQuery} = require('./quality_management_line_chart_query');
 const {qualityManagementLineChartByItemQuery} = require('./quality_management_line_chart_by_item_query');
+const {qualityManagementPieChartQuery} = require('./quality_management_pie_chart_query');
+const {qualityManagementPieChartByItemQuery} = require('./quality_management_pie_chart_by_item_query');
 
 const app = express();
 
@@ -189,6 +191,33 @@ const getQualityManagementLineChartByItem = (request, response) => {
   });
 }
 
+const getQualityManagementPieChart = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const start = request.query.start;
+  const end = request.query.end;
+
+  pool.query(qualityManagementPieChartQuery, [supplierId, start, end], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows);
+  });
+}
+
+const getQualityManagementPieChartByItem = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const itemId = parseInt(request.query.itemId);
+  const start = request.query.start;
+  const end = request.query.end;
+
+  pool.query(qualityManagementPieChartByItemQuery, [supplierId, itemId, start, end], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows);
+  });
+}
+
 app.get('/suppliers', getSuppliers);
 app.get('/items', getItems);
 app.get('/otdlinechart/', getOTDLineChart);
@@ -202,6 +231,8 @@ app.get('/costreductionpiechartbyitem/', getCostReductionPieChartByItem);
 app.get('/costreductiontable/', getCostReductionTable);
 app.get('/qualitymanagementlinechart/', getQualityManagementLineChart);
 app.get('/qualitymanagementlinechartbyitem/', getQualityManagementLineChartByItem);
+app.get('/qualitymanagementpiechart/', getQualityManagementPieChart);
+app.get('/qualitymanagementpiechartbyitem/', getQualityManagementPieChartByItem);
 
 app.listen(3002, () => {
   console.log("Server is listening");
