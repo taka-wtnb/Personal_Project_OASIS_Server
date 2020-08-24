@@ -16,6 +16,7 @@ const {qualityManagementLineChartQuery} = require('./quality_management_line_cha
 const {qualityManagementLineChartByItemQuery} = require('./quality_management_line_chart_by_item_query');
 const {qualityManagementPieChartQuery} = require('./quality_management_pie_chart_query');
 const {qualityManagementPieChartByItemQuery} = require('./quality_management_pie_chart_by_item_query');
+const {qualityTableQuery} = require('./quality_table_query');
 
 const app = express();
 
@@ -218,6 +219,19 @@ const getQualityManagementPieChartByItem = (request, response) => {
   });
 }
 
+const getQualityTable = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const start = request.query.start;
+  const end = request.query.end;
+
+  pool.query(qualityTableQuery, [supplierId, start, end], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows);
+  });
+}
+
 app.get('/suppliers', getSuppliers);
 app.get('/items', getItems);
 app.get('/otdlinechart/', getOTDLineChart);
@@ -233,6 +247,7 @@ app.get('/qualitymanagementlinechart/', getQualityManagementLineChart);
 app.get('/qualitymanagementlinechartbyitem/', getQualityManagementLineChartByItem);
 app.get('/qualitymanagementpiechart/', getQualityManagementPieChart);
 app.get('/qualitymanagementpiechartbyitem/', getQualityManagementPieChartByItem);
+app.get('/qualitytable/', getQualityTable);
 
 app.listen(3002, () => {
   console.log("Server is listening");
