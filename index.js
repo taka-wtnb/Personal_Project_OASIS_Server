@@ -4,6 +4,7 @@ const cors = require('cors');
 const {pool} = require('./config');
 
 const {dashboardOpenOrderTableQuery} = require('./dashboard_open_order_table_query');
+const {dashboardPendingQualityIssueTableQuery} = require('./dashboard_pending_quality_issue_table_query');
 const {otdLineChartQuery} = require('./otd_line_chart_query');
 const {otdLineChartByItemQuery} = require('./otd_line_chart_by_item_query');
 const {otdPieChartQuery} = require('./otd_pie_chart_query');
@@ -49,6 +50,17 @@ const getDashboardOpenOrderTable = (request, response) => {
   const supplierId = parseInt(request.query.supplierId);
 
   pool.query(dashboardOpenOrderTableQuery, [supplierId], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows);
+  });
+}
+
+const getDashboardPendingQualityIssueTable = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+
+  pool.query(dashboardPendingQualityIssueTableQuery, [supplierId], (error, results) => {
     if (error) { 
       throw error
     }
@@ -262,6 +274,7 @@ const getQualityTable = (request, response) => {
 app.get('/suppliers', getSuppliers);
 app.get('/items', getItems);
 app.get('/dashboardopenordertable/', getDashboardOpenOrderTable)
+app.get('/dashboardpendingqualityissuetable/', getDashboardPendingQualityIssueTable)
 app.get('/otdlinechart/', getOTDLineChart);
 app.get('/otdlinechartbyitem/', getOTDLineChartByItem);
 app.get('/otdpiechart/', getOTDPieChart);

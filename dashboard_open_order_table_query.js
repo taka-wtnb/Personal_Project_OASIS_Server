@@ -13,11 +13,11 @@ WHERE supplier_id=$1
 ) AS supplier_orders
 ON supplier_orders.order_id = otd.order_id
 WHERE otd.delivery_date IS NULL
-ORDER BY supplier_orders.promise_date LIMIT 5
 )AS open_orders
 ON open_orders.item_id=item.id
 ) AS item_open_orders
-ON item_open_orders.unit_id = item_unit.id;`;
+ON item_open_orders.unit_id = item_unit.id
+ORDER BY item_open_orders.promise_date LIMIT 5;`;
 
 module.exports = {
     dashboardOpenOrderTableQuery,
