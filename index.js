@@ -12,6 +12,7 @@ const {costReductionLineChartQuery} = require('./cost_reduction_line_chart_query
 const {costReductionPieChartQuery} = require('./cost_reduction_pie_chart_query');
 const {costReductionPieChartByItemQuery} = require('./cost_reduction_pie_chart_by_item_query');
 const {costReductionTableQuery} = require('./cost_reduction_table_query');
+const {costReductionBestWorstTableQuery} = require('./cost_reduction_best_worst_table_query');
 const {qualityManagementLineChartQuery} = require('./quality_management_line_chart_query');
 const {qualityManagementLineChartByItemQuery} = require('./quality_management_line_chart_by_item_query');
 const {qualityManagementPieChartQuery} = require('./quality_management_pie_chart_query');
@@ -165,6 +166,20 @@ const getCostReductionTable = (request, response) => {
   });
 }
 
+const getCostReductionBestWorstTable = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const oldStart = request.query.oldStart;
+  const newStart = request.query.newStart;
+  const newEnd = request.query.newEnd;
+
+  pool.query(costReductionBestWorstTableQuery, [supplierId, oldStart, newStart, newEnd], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows);
+  });
+}
+
 const getQualityManagementLineChart = (request, response) => { 
   const supplierId = parseInt(request.query.supplierId);
   const start = request.query.start;
@@ -243,6 +258,7 @@ app.get('/costreductionlinechart/', getCostReductionLineChart);
 app.get('/costreductionpiechart/', getCostReductionPieChart);
 app.get('/costreductionpiechartbyitem/', getCostReductionPieChartByItem);
 app.get('/costreductiontable/', getCostReductionTable);
+app.get('/costreductionbestworsttable/', getCostReductionBestWorstTable);
 app.get('/qualitymanagementlinechart/', getQualityManagementLineChart);
 app.get('/qualitymanagementlinechartbyitem/', getQualityManagementLineChartByItem);
 app.get('/qualitymanagementpiechart/', getQualityManagementPieChart);
