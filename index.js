@@ -7,6 +7,7 @@ const {dashboardOpenOrderTableQuery} = require('./dashboard_open_order_table_que
 const {dashboardPendingQualityIssueTableQuery} = require('./dashboard_pending_quality_issue_table_query');
 const {dashboardSpendingChartQuery} = require('./dashboard_spending_chart_query');
 const {dashboardSpendingChartByItemQuery} = require('./dashboard_spending_chart_by_item_query');
+const {dashboardSpendingTableQuery} = require('./dashboard_spending_table_query');
 const {otdLineChartQuery} = require('./otd_line_chart_query');
 const {otdLineChartByItemQuery} = require('./otd_line_chart_by_item_query');
 const {otdPieChartQuery} = require('./otd_pie_chart_query');
@@ -90,6 +91,19 @@ const getDashboardSpendingChartByItem = (request, response) => {
   const end = request.query.end;
 
   pool.query(dashboardSpendingChartByItemQuery, [supplierId, itemId, start, end], (error, results) => {
+    if (error) { 
+      throw error
+    }
+    response.status(200).json(results.rows);
+  });
+}
+
+const getDashboardSpendingTable = (request, response) => { 
+  const supplierId = parseInt(request.query.supplierId);
+  const start = request.query.start;
+  const end = request.query.end;
+
+  pool.query(dashboardSpendingTableQuery, [supplierId, start, end], (error, results) => {
     if (error) { 
       throw error
     }
@@ -303,10 +317,11 @@ const getQualityTable = (request, response) => {
 
 app.get('/suppliers', getSuppliers);
 app.get('/items', getItems);
-app.get('/dashboardopenordertable/', getDashboardOpenOrderTable)
-app.get('/dashboardpendingqualityissuetable/', getDashboardPendingQualityIssueTable)
-app.get('/dashboardspendingchart/', getDashboardSpendingChart)
-app.get('/dashboardspendingchartbyitem/', getDashboardSpendingChartByItem)
+app.get('/dashboardopenordertable/', getDashboardOpenOrderTable);
+app.get('/dashboardpendingqualityissuetable/', getDashboardPendingQualityIssueTable);
+app.get('/dashboardspendingchart/', getDashboardSpendingChart);
+app.get('/dashboardspendingchartbyitem/', getDashboardSpendingChartByItem);
+app.get('/dashboardspendingtable/', getDashboardSpendingTable);
 app.get('/otdlinechart/', getOTDLineChart);
 app.get('/otdlinechartbyitem/', getOTDLineChartByItem);
 app.get('/otdpiechart/', getOTDPieChart);
