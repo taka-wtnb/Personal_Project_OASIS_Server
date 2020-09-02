@@ -56,10 +56,6 @@ app.get('/qualitymanagementpiechart/', qualityManagementPieChart.getQualityManag
 app.get('/qualitymanagementpiechartbyitem/', qualityManagementPieChartByItem.getQualityManagementPieChartByItem(pool));
 app.get('/qualitytable/', qualityTable.getQualityTable(pool));
 
-app.listen(3002, () => {
+app.listen(process.env.PORT || 3002, () => {
   console.log("Server is listening");
 });
-
-// app.listen(process.env.PORT || 3002, () => {
-//   console.log("Server is listening");
-// });
