@@ -32,7 +32,9 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use(cors());
+
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
 app.get('/', (req, res) => { res.send('It is working!') });
 app.get('/suppliers', suppliers.getSuppliers(pool));
 app.get('/items', items.getItems(pool));
