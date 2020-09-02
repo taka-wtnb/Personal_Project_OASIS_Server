@@ -33,6 +33,7 @@ app.use(express.json());
 
 app.use(cors());
 
+app.get('/', (req, res) => { res.send('It is working!') });
 app.get('/suppliers', suppliers.getSuppliers(pool));
 app.get('/items', items.getItems(pool));
 app.get('/dashboardopenordertable/', dashboardopenordertable.getDashboardOpenOrderTable(pool));
