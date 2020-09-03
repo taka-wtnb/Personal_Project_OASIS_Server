@@ -1,6 +1,6 @@
 const qualityManagementBarChartQuery = `SELECT  DATE_PART('year', date_detected) AS Year,
 DATE_PART('month', date_detected) AS Month,
-TO_CHAR(date_trunc('month', date_detected), 'Mon-yy') AS MONYY,
+CONCAT (TO_CHAR(date_trunc('month', order_date), 'Mon'), ' ''',  TO_CHAR(date_trunc('month', order_date), 'yy')) AS MONYY,
 COUNT(*) AS Total
 FROM    (
 SELECT id, date_detected
