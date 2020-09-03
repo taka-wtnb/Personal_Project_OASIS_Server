@@ -1,6 +1,6 @@
 const otdLineChartByItemQuery = `SELECT  DATE_PART('year', delivery_date) AS Year,
 DATE_PART('month', delivery_date) AS Month,
-CONCAT (TO_CHAR(date_trunc('month', order_date), 'Mon'), ' ''',  TO_CHAR(date_trunc('month', order_date), 'yy')) AS MONYY,
+CONCAT (TO_CHAR(date_trunc('month', delivery_date), 'Mon'), ' ''',  TO_CHAR(date_trunc('month', delivery_date), 'yy')) AS MONYY,
 COUNT(id) AS Total,
 SUM(
 CASE WHEN isDelayed = FALSE
