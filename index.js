@@ -28,6 +28,8 @@ const qualityTable = require('./routes/qualityTable');
 
 const app = express();
 
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
