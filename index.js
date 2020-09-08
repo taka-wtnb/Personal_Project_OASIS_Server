@@ -28,18 +28,12 @@ const qualityTable = require('./routes/qualityTable');
 
 const app = express();
 
-//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use(cors());
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://spar-web-app.herokuapp.com/"); // update to match the domain you will make the request from
-  //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 app.get('/', (req, res) => { res.send('It is working!') });
 app.get('/suppliers', suppliers.getSuppliers(pool));
