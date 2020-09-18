@@ -28,48 +28,36 @@ const qualityTable = require('./routes/qualityTable');
 
 const app = express();
 
-//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-var whitelist = ['https://spar-web-app.herokuapp.com'];
+app.use(cors());
 
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}
-
-//app.use(cors(corsOptions));
-
-app.get('/', cors(corsOptions), (req, res) => { res.send('It is working!') });
-app.get('/suppliers', cors(corsOptions), suppliers.getSuppliers(pool));
-app.get('/items', cors(corsOptions), items.getItems(pool));
-app.get('/dashboardopenordertable/', cors(corsOptions), dashboardopenordertable.getDashboardOpenOrderTable(pool));
-app.get('/dashboardpendingqualityissuetable/', cors(corsOptions), dashboardPendingQualityIssueTable.getDashboardPendingQualityIssueTable(pool));
-app.get('/dashboardspendingchart/', cors(corsOptions), dashboardSpendingChart.getDashboardSpendingChart(pool));
-app.get('/dashboardspendingchartbyitem/', cors(corsOptions), dashboardSpendingChartByItem.getDashboardSpendingChartByItem(pool));
-app.get('/dashboardspendingtable/', cors(corsOptions), dashboardSpendingTable.getDashboardSpendingTable(pool));
-app.get('/otdlinechart/', cors(corsOptions), otdLineChart.getOTDLineChart(pool));
-app.get('/otdlinechartbyitem/', cors(corsOptions), otdLineChartByItem.getOTDLineChartByItem(pool));
-app.get('/otdpiechart/', cors(corsOptions), otdPieChart.getOTDPieChart(pool));
-app.get('/otdpiechartbyitem/', cors(corsOptions), otdPieChartByItem.getOTDPieChartByItem(pool));
-app.get('/otdtable/', cors(corsOptions), otdTable.getOTDTable(pool));
-app.get('/costreductionlinechart/', cors(corsOptions), costReductionLineChart.getCostReductionLineChart(pool));
-app.get('/costreductionpiechart/', cors(corsOptions), costReductionPieChart.getCostReductionPieChart(pool));
-app.get('/costreductionpiechartbyitem/', cors(corsOptions), costReductionPieChartByItem.getCostReductionPieChartByItem(pool));
-app.get('/costreductiontable/', cors(corsOptions), costReductionTable.getCostReductionTable(pool));
-app.get('/costreductionbestworsttable/', cors(corsOptions), costReductionBestWorstTable.getCostReductionBestWorstTable(pool));
-app.get('/qualitymanagementbarchart/', cors(corsOptions), qualityManagementBarChart.getQualityManagementBarChart(pool));
-app.get('/qualitymanagementbarchartbyitem/', cors(corsOptions), qualityManagementBarChartByItem.getQualityManagementBarChartByItem(pool));
-app.get('/qualitymanagementpiechart/', cors(corsOptions), qualityManagementPieChart.getQualityManagementPieChart(pool));
-app.get('/qualitymanagementpiechartbyitem/', cors(corsOptions), qualityManagementPieChartByItem.getQualityManagementPieChartByItem(pool));
-app.get('/qualitytable/', cors(corsOptions), qualityTable.getQualityTable(pool));
+app.get('/', (req, res) => { res.send('It is working!') });
+app.get('/suppliers', suppliers.getSuppliers(pool));
+app.get('/items', items.getItems(pool));
+app.get('/dashboardopenordertable/', dashboardopenordertable.getDashboardOpenOrderTable(pool));
+app.get('/dashboardpendingqualityissuetable/', dashboardPendingQualityIssueTable.getDashboardPendingQualityIssueTable(pool));
+app.get('/dashboardspendingchart/', dashboardSpendingChart.getDashboardSpendingChart(pool));
+app.get('/dashboardspendingchartbyitem/', dashboardSpendingChartByItem.getDashboardSpendingChartByItem(pool));
+app.get('/dashboardspendingtable/', dashboardSpendingTable.getDashboardSpendingTable(pool));
+app.get('/otdlinechart/', otdLineChart.getOTDLineChart(pool));
+app.get('/otdlinechartbyitem/', otdLineChartByItem.getOTDLineChartByItem(pool));
+app.get('/otdpiechart/', otdPieChart.getOTDPieChart(pool));
+app.get('/otdpiechartbyitem/', otdPieChartByItem.getOTDPieChartByItem(pool));
+app.get('/otdtable/', otdTable.getOTDTable(pool));
+app.get('/costreductionlinechart/', costReductionLineChart.getCostReductionLineChart(pool));
+app.get('/costreductionpiechart/', costReductionPieChart.getCostReductionPieChart(pool));
+app.get('/costreductionpiechartbyitem/', costReductionPieChartByItem.getCostReductionPieChartByItem(pool));
+app.get('/costreductiontable/', costReductionTable.getCostReductionTable(pool));
+app.get('/costreductionbestworsttable/', costReductionBestWorstTable.getCostReductionBestWorstTable(pool));
+app.get('/qualitymanagementbarchart/', qualityManagementBarChart.getQualityManagementBarChart(pool));
+app.get('/qualitymanagementbarchartbyitem/', qualityManagementBarChartByItem.getQualityManagementBarChartByItem(pool));
+app.get('/qualitymanagementpiechart/', qualityManagementPieChart.getQualityManagementPieChart(pool));
+app.get('/qualitymanagementpiechartbyitem/', qualityManagementPieChartByItem.getQualityManagementPieChartByItem(pool));
+app.get('/qualitytable/', qualityTable.getQualityTable(pool));
 
 app.listen(process.env.PORT || 3002, () => {
   console.log("Server is listening");
