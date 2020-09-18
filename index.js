@@ -28,12 +28,24 @@ const qualityTable = require('./routes/qualityTable');
 
 const app = express();
 
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.use(cors());
+var whitelist = ['https://spar-web-app.herokuapp.com'];
+
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}
+
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => { res.send('It is working!') });
 app.get('/suppliers', suppliers.getSuppliers(pool));
