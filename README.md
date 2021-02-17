@@ -1,4 +1,4 @@
-## SPAR -Supplier Performance Analysis Repository- (Server-side)
+## OASIS -Order Admin Support Integration System- (Server-side)
 
 This is a repository for the server-side source codes of my personal project (‘[SPAR](https://spar-web-app.herokuapp.com/)’).
 
