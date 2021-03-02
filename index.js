@@ -3,6 +3,10 @@ const cors = require('cors');
 
 const {pool} = require('./config');
 
+const allOpenOrders = require('./routes/allOpenOrders');
+const delayReasons = require('./routes/delayReasons');
+const openOrderCompletion = require('./routes/openOrderCompletion');
+
 const suppliers = require('./routes/suppliers');
 const items = require('./routes/items');
 const dashboardopenordertable = require('./routes/dashboardOpenOrderTable');
@@ -30,8 +34,24 @@ const app = express();
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors({
+  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'exposedHeaders': ['sessionId'],
+  'origin': 'http://localhost:4200',
+  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  'preflightContinue': false
+}));
+// app.use(cors());
+// const corsOptions = {
+//   origin: 'http://localhost:4200'
+// }
 
-app.use(cors());
+// app.use(cors(corsOptions));
+
+app.get('/allopenorders/', allOpenOrders.getAllOpenOrders(pool));
+app.get('/delayReasons/', delayReasons.getDelayReasons(pool));
+app.post('/openordercompletion/', openOrderCompletion.postOpenOrderCompletion(pool));
+
 
 app.get('/', (req, res) => { res.send('It is working!') });
 app.get('/suppliers', suppliers.getSuppliers(pool));
