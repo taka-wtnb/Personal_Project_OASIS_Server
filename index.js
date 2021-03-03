@@ -6,6 +6,7 @@ const {pool} = require('./config');
 const allOpenOrders = require('./routes/allOpenOrders');
 const delayReasons = require('./routes/delayReasons');
 const openOrderCompletion = require('./routes/openOrderCompletion');
+const delayEntry = require('./routes/delayEntry');
 
 const suppliers = require('./routes/suppliers');
 const items = require('./routes/items');
@@ -51,7 +52,7 @@ app.use(cors({
 app.get('/allopenorders/', allOpenOrders.getAllOpenOrders(pool));
 app.get('/delayReasons/', delayReasons.getDelayReasons(pool));
 app.post('/openordercompletion/', openOrderCompletion.postOpenOrderCompletion(pool));
-
+app.post('/delayentry/', delayEntry.postDelayEntry(pool));
 
 app.get('/', (req, res) => { res.send('It is working!') });
 app.get('/suppliers', suppliers.getSuppliers(pool));
