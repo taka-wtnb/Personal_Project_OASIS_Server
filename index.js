@@ -11,6 +11,7 @@ const closedOrders = require('./routes/closedOrders');
 const pendingQualityIssues = require('./routes/pendingQualityIssues');
 const qualityIssueEntry = require('./routes/qualityIssueEntry');
 const qualityIssueClosing = require('./routes/qualityIssueClosing');
+const qualityIssueCategories = require('./routes/qualityIssueCategories');
 
 const suppliers = require('./routes/suppliers');
 const items = require('./routes/items');
@@ -60,7 +61,8 @@ app.post('/delayentry/', delayEntry.postDelayEntry(pool));
 app.get('/closedorders/', closedOrders.getClosedOrders(pool));
 app.get('/pendingqualityissues/', pendingQualityIssues.getPendingQualityIssuesOrders(pool));
 app.post('/qualityissueentry/', qualityIssueEntry.postQualityIssueEntry(pool));
-app.post('/qualityissueclosing/', qualityIssueClosing.postQualityIssueClosing(pool));
+app.put('/qualityissueclosing/', qualityIssueClosing.putQualityIssueClosing(pool));
+app.get('/qualityissuecategories/', qualityIssueCategories.getQualityIssueCategories(pool));
 
 app.get('/', (req, res) => { res.send('It is working!') });
 app.get('/suppliers', suppliers.getSuppliers(pool));

@@ -1,6 +1,6 @@
 const {qualityIssueClosingQuery} = require('../queries/quality_issue_closing_query');
 
-const postQualityIssueClosing = (pool) => (request, response) => { 
+const putQualityIssueClosing = (pool) => (request, response) => { 
     const orderId = parseInt(request.body.orderId);
     const dateClosed = request.body.dateClosed;
   
@@ -13,5 +13,5 @@ const postQualityIssueClosing = (pool) => (request, response) => {
 }
 
 module.exports = {
-    postQualityIssueClosing,
+    putQualityIssueClosing,
 }
