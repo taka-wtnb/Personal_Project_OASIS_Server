@@ -42,6 +42,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
 
+app.get('/allitems/', allItems.getAllItems(pool));
 app.get('/allopenorders/', allOpenOrders.getAllOpenOrders(pool));
 app.get('/delayReasons/', delayReasons.getDelayReasons(pool));
 app.post('/openordercompletion/', openOrderCompletion.postOpenOrderCompletion(pool));
