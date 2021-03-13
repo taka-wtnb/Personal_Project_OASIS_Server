@@ -4,7 +4,7 @@ const cors = require('cors');
 const {pool} = require('./config');
 
 const allItems = require('./routes/allItems');
-const allSuppliers = require('./routes/allSuppliers');
+const allSuppliers = require('./routes/allSuppliersRev');
 const newOrderEntry = require('./routes/newOrderEntry');
 const mostRecentOrderByItemAndSupplier = require('./routes/mostRecentOrderByItemAndSupplier');
 const priceChangeCategories = require('./routes/priceChangeCategories');
