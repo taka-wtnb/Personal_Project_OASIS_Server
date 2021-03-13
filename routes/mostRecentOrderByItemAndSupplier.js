@@ -1,4 +1,4 @@
-const {mostRecentOrderByItemAndSupplierQuery} = require('../queries/most_recent_order_by_item_and_supplier');
+const {mostRecentOrderByItemAndSupplierQuery} = require('../queries/most_recent_order_by_item_and_supplier_query');
 
 const getMostRecentOrderByItemAndSupplierQuery = (pool) => (request, response) => { 
 
