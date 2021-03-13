@@ -5,10 +5,16 @@ const {pool} = require('./config');
 
 const allItems = require('./routes/allItems');
 const allSuppliers = require('./routes/allSuppliers');
+const newOrderEntry = require('./routes/newOrderEntry');
+const mostRecentOrderByItemAndSupplier = require('./routes/mostRecentOrderByItemAndSupplier');
+const priceChangeCategories = require('./routes/priceChangeCategories');
+const priceIncreaseEntry = require('./routes/priceIncreaseEntry');
+
 const allOpenOrders = require('./routes/allOpenOrders');
 const delayReasons = require('./routes/delayReasons');
 const openOrderCompletion = require('./routes/openOrderCompletion');
 const delayEntry = require('./routes/delayEntry');
+
 const closedOrders = require('./routes/closedOrders');
 const pendingQualityIssues = require('./routes/pendingQualityIssues');
 const qualityIssueEntry = require('./routes/qualityIssueEntry');
@@ -46,11 +52,17 @@ app.use(cors());
 
 app.get('/allitems/', allItems.getAllItems(pool));
 app.get('/allsuppliers/', allSuppliers.getAllSuppliers(pool));
+app.post('/neworderentry/', newOrderEntry.postNewOrderEntry(pool));
+app.get('/mostrecentorderbyitemandsupplier/', mostRecentOrderByItemAndSupplier.getMostRecentOrderByItemAndSupplierQuery(pool));
+app.get('/pricechangecategories/', priceChangeCategories.getPriceChangeCategories(pool));
+app.post('/priceincreaseentry/', priceIncreaseEntry.postPriceIncreaseEntry(pool));
+
 app.get('/allopenorders/', allOpenOrders.getAllOpenOrders(pool));
 app.get('/delayReasons/', delayReasons.getDelayReasons(pool));
 app.post('/openordercompletion/', openOrderCompletion.postOpenOrderCompletion(pool));
 app.post('/delayentry/', delayEntry.postDelayEntry(pool));
 app.get('/closedorders/', closedOrders.getClosedOrders(pool));
+
 app.get('/pendingqualityissues/', pendingQualityIssues.getPendingQualityIssuesOrders(pool));
 app.post('/qualityissueentry/', qualityIssueEntry.postQualityIssueEntry(pool));
 app.put('/qualityissueclosing/', qualityIssueClosing.putQualityIssueClosing(pool));
