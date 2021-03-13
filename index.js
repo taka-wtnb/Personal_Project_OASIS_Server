@@ -4,7 +4,7 @@ const cors = require('cors');
 const {pool} = require('./config');
 
 const allItems = require('./routes/allItems');
-// const allSuppliers = require('./routes/allSuppliers');
+const allSuppliers = require('./routes/allSuppliers');
 const newOrderEntry = require('./routes/newOrderEntry');
 const mostRecentOrderByItemAndSupplier = require('./routes/mostRecentOrderByItemAndSupplier');
 const priceChangeCategories = require('./routes/priceChangeCategories');
@@ -51,7 +51,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/allitems/', allItems.getAllItems(pool));
-// app.get('/allsuppliers/', allSuppliers.getAllSuppliers(pool));
+app.get('/allsuppliers/', allSuppliers.getAllSuppliers(pool));
 app.post('/neworderentry/', newOrderEntry.postNewOrderEntry(pool));
 app.get('/mostrecentorderbyitemandsupplier/', mostRecentOrderByItemAndSupplier.getMostRecentOrderByItemAndSupplierQuery(pool));
 app.get('/pricechangecategories/', priceChangeCategories.getPriceChangeCategories(pool));
