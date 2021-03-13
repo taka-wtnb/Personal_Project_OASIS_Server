@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const {pool} = require('./config');
 
+const allItems = require('./routes/allItems');
 const allOpenOrders = require('./routes/allOpenOrders');
 const delayReasons = require('./routes/delayReasons');
 const openOrderCompletion = require('./routes/openOrderCompletion');
