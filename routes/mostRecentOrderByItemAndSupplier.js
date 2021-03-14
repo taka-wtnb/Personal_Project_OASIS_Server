@@ -2,8 +2,8 @@ const {mostRecentOrderByItemAndSupplierQuery} = require('../queries/most_recent_
 
 const getMostRecentOrderByItemAndSupplierQuery = (pool) => (request, response) => { 
 
-    const itemId = parseInt(request.body.itemId);
-    const supplierId = parseInt(request.body.supplierId);
+    const itemId = parseInt(request.query.itemId);
+    const supplierId = parseInt(request.query.supplierId);
 
     pool.query(mostRecentOrderByItemAndSupplierQuery,  [itemId, supplierId], (error, results) => {
       if (error) { 
