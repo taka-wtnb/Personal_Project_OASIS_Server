@@ -22,6 +22,8 @@ const qualityIssueClosing = require('./routes/qualityIssueClosing');
 const qualityIssueCategories = require('./routes/qualityIssueCategories');
 
 const thirtyMostRecentOrders = require('./routes/thirtyMostRecentOrders');
+const recentQualityIssues = require('./routes/recentQualityIssues');
+const recentPriceIncrease = require('./routes/recentPriceIncrease');
 
 const suppliers = require('./routes/suppliers');
 const items = require('./routes/items');
@@ -71,6 +73,8 @@ app.put('/qualityissueclosing/', qualityIssueClosing.putQualityIssueClosing(pool
 app.get('/qualityissuecategories/', qualityIssueCategories.getQualityIssueCategories(pool));
 
 app.get('/thirtymostrecentorders/', thirtyMostRecentOrders.getThirtyMostRecentOrders(pool));
+app.get('/recentqualityissues/', recentQualityIssues.getRecentQualityIssues(pool));
+app.get('/recentpriceincrease/', recentPriceIncrease.getRecentPriceIncrease(pool));
 
 app.get('/', (req, res) => { res.send('It is working!') });
 app.get('/suppliers', suppliers.getSuppliers(pool));
