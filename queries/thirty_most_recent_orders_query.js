@@ -21,7 +21,7 @@ ON open_orders.item_id=item.id
 ON item_open_orders.unit_id = item_unit.id
 ) AS base_orders
 ON base_orders.supplier_id = supplier.id
-ORDER BY base_orders.order_date DESC, base_orders.order_id LIMIT 30;`;
+ORDER BY base_orders.order_date DESC, base_orders.order_id LIMIT 36;`;
 
 module.exports = {
     thirtyMostRecentOrdersQuery,
